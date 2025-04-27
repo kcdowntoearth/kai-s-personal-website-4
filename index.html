@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人介面</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0000ff;
+            --text-color: #000000;
+            --bg-color: #ffffff;
+            --card-bg: #f8f9fa;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: center;
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 255, 0.2);
+        }
+        
+        .profile-info h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .profile-info h1::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition);
+        }
+        
+        .profile-info:hover h1::after {
+            transform: scaleX(1);
+        }
+        
+        .bio {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+        
+        section {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 255, 0.1);
+        }
+        
+        section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        section h2::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 0;
+        }
+        
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        
+        .skill-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .skill-item:hover .skill-icon {
+            transform: rotate(360deg);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            background-color: #0000cc;
+        }
+        
+        .contact-form {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+        
+        input, textarea {
+            font-family: 'Noto Sans TC', sans-serif;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            transition: var(--transition);
+        }
+        
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: var(--transition);
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        
+        button:hover {
+            background-color: #0000cc;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 255, 0.3);
+        }
+        
+        /* 作品集樣式 */
+        .portfolio-section {
+            margin-bottom: 3rem;
+        }
+        
+        .portfolio-title {
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .portfolio-title::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 0;
+        }
+        
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            margin: 0 -1rem;
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+            margin: 0 1rem;
+        }
+        
+        .slide {
+            flex: 0 0 100%;
+            max-width: 100%;
+            padding: 0 1rem;
+            transition: var(--transition);
+        }
+        
+        .project-card {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 255, 0.15);
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .project-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .project-card:hover .project-img img {
+            transform: scale(1.1);
+        }
+        
+        .project-info {
+            padding: 1.5rem;
+        }
+        
+        .project-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .project-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            gap: 0.5rem;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .slider-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        .slider-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            pointer-events: none;
+        }
+        
+        .arrow {
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            pointer-events: auto;
+        }
+        
+        .arrow:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .contact-skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .profile-img {
+                margin: 0 auto;
+            }
+            
+            .profile-info h1::after {
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+            }
+            
+            .profile-info:hover h1::after {
+                transform: translateX(-50%) scaleX(1);
+            }
+            
+            .contact-skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .portfolio-title {
+                display: block;
+                text-align: center;
+            }
+            
+            .portfolio-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            section h2 {
+                display: block;
+                text-align: center;
+            }
+            
+            section h2::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .skills-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+            
+            .slide {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .slide {
+                flex: 0 0 33.333%;
+                max-width: 33.333%;
+            }
+        }
+
+        /* 動畫效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        header, section, .portfolio-section {
+            animation: fadeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+        
+        header {
+            animation-delay: 0.2s;
+        }
+        
+        .portfolio-section:nth-of-type(1) {
+            animation-delay: 0.4s;
+        }
+        
+        .portfolio-section:nth-of-type(2) {
+            animation-delay: 0.6s;
+        }
+        
+        .portfolio-section:nth-of-type(3) {
+            animation-delay: 0.8s;
+        }
+        
+        .contact-skills-container section:nth-child(1) {
+            animation-delay: 1s;
+        }
+        
+        .contact-skills-container section:nth-child(2) {
+            animation-delay: 1.2s;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-img">
+                <img src="images/IMG_7138.jpeg" alt="個人照片">
+            </div>
+            <div class="profile-info">
+                <h1>徐愷淇</h1>
+                <div class="bio">
+                    您好！我是王小明，一位充滿熱情的前端開發者，專注於創建美觀且功能強大的網頁體驗。我有 5 年的網頁開發經驗，擅長將設計轉化為高質量的代碼。我熱愛嘗試新技術，並且相信簡約而精緻的設計能夠帶來最佳的用戶體驗。在工作之餘，我喜歡研究最新的網頁開發趨勢、參與開源項目，以及到戶外進行攝影創作。
+                </div>
+            </div>
+        </header>
+        
+        <!-- 作品集區域 1 -->
+        <div class="portfolio-section">
+            <h2 class="portfolio-title">平面設計</h2>
+            <div class="slider-container">
+                <div class="slider" id="slider1">
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="/api/placeholder/600/400" alt="網頁設計作品1">
+                            </div>
+                            <div class="project-info">
+                                <h3>電子商務網站</h3>
+                                <p>使用React打造的現代電子商務平台，具有流暢的購物體驗。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="/api/placeholder/600/400" alt="網頁設計作品2">
+                            </div>
+                            <div class="project-info">
+                                <h3>企業形象網站</h3>
+                                <p>為科技公司打造的專業形象網站，展現公司核心價值和服務。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="/api/placeholder/600/400" alt="網頁設計作品3">
+                            </div>
+                            <div class="project-info">
+                                <h3>個人部落格</h3>
+                                <p>以簡約設計為主的個人部落格，專注於內容閱讀體驗。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-arrows">
+                    <div class="arrow prev" onclick="prevSlide(1)"><i class="fas fa-chevron-left"></i></div>
+                    <div class="arrow next" onclick="nextSlide(1)"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                <div class="slider-nav" id="sliderNav1">
+                    <div class="slider-dot active" onclick="goToSlide(1, 0)"></div>
+                    <div class="slider-dot" onclick="goToSlide(1, 1)"></div>
+                    <div class="slider-dot" onclick="goToSlide(1, 2)"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作品集區域 2 -->
+        <div class="portfolio-section">
+            <h2 class="portfolio-title">電繪插畫</h2>
+            <div class="slider-container">
+                <div class="slider" id="slider2">
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="/api/placeholder/600/400" alt="UI/UX 設計1">
+                            </div>
+                            <div class="project-info">
+                                <h3>行動應用設計</h3>
+                                <p>為健康追蹤應用設計的直覺式用戶介面，提升用戶參與度。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="/api/placeholder/600/400" alt="UI/UX 設計2">
+                            </div>
+                            <div class="project-info">
+                                <h3>後台管理系統</h3>
+                                <p>簡化操作流程的後台管理介面，提高工作效率。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="/api/placeholder/600/400" alt="UI/UX 設計3">
+                            </div>
+                            <div class="project-info">
+                                <h3>金融應用介面</h3>
+                                <p>專為金融服務設計的安全易用界面，優化用戶體驗。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-arrows">
+                    <div class="arrow prev" onclick="prevSlide(2)"><i class="fas fa-chevron-left"></i></div>
+                    <div class="arrow next" onclick="nextSlide(2)"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                <div class="slider-nav" id="sliderNav2">
+                    <div class="slider-dot active" onclick="goToSlide(2, 0)"></div>
+                    <div class="slider-dot" onclick="goToSlide(2, 1)"></div>
+                    <div class="slider-dot" onclick="goToSlide(2, 2)"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 作品集區域 3 -->
+        <div class="portfolio-section">
+            <h2 class="portfolio-title">手繪作品</h2>
+            <div class="slider-container">
+                <div class="slider" id="slider3">
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="https://drive.google.com/uc?export=view&id=1oUTuEHMpOzviscB97xhgR99tNUTaD2vr" alt="平面設計作品1">
+                            </div>
+                            <div class="project-info">
+                                <h3>品牌識別設計</h3>
+                                <p>為新創公司打造完整的品牌視覺識別系統。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="https://drive.google.com/uc?export=view&id=1flO-Uz_QINmW7KfrJSmVGdBD6-xO5Qro" alt="平面設計作品2">
+                            </div>
+                            <div class="project-info">
+                                <h3>活動海報設計</h3>
+                                <p>引人注目的音樂節系列海報，提升活動參與率。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide">
+                        <div class="project-card">
+                            <div class="project-img">
+                                <img src="https://drive.google.com/uc?export=view&id=1EywOk2oCSfQ3Y9ftRYq7VRWswAC2oBTk" alt="平面設計作品3">
+                            </div>
+                            <div class="project-info">
+                                <h3>包裝設計</h3>
+                                <p>環保概念的產品包裝設計，結合實用性與美感。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-arrows">
+                    <div class="arrow prev" onclick="prevSlide(3)"><i class="fas fa-chevron-left"></i></div>
+                    <div class="arrow next" onclick="nextSlide(3)"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                <div class="slider-nav" id="sliderNav3">
+                    <div class="slider-dot active" onclick="goToSlide(3, 0)"></div>
+                    <div class="slider-dot" onclick="goToSlide(3, 1)"></div>
+                    <div class="slider-dot" onclick="goToSlide(3, 2)"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-skills-container">
+            <section>
+                <h2>我的技能</h2>
+                <div class="skills-list">
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                        <div>HTML5 / CSS3</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fab fa-js"></i></div>
+                        <div>JavaScript / TypeScript</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fab fa-react"></i></div>
+                        <div>React / Vue.js</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div>響應式設計</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-paint-brush"></i></div>
+                        <div>UI/UX 設計</div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-icon"><i class="fas fa-code-branch"></i></div>
+                        <div>Git / GitHub</div>
+                    </div>
+                </div>
+                
+                <h2 style="margin-top: 2rem;">社群連結</h2>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                </div>
+            </section>
+            
+            <section>
+                <h2>聯絡我</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">主旨</label>
+                        <input type="text" id="subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">訊息</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">送出訊息</button>
+                </form>
+            </section>
+        </div>
+    </div>
+    
+    <script>
+        // 當前滑動索引
+        let currentSlideIndex1 = 0;
+        let currentSlideIndex2 = 0;
+        let currentSlideIndex3 = 0;
+        
+        // 每個滑塊的寬度百分比
+        let slideWidth = 100;
+        
+        // 在較大的屏幕上，每個滑塊佔33.333%
+        function updateSlideWidth() {
+            if (window.innerWidth > 768) {
+                slideWidth = 33.333;
+            } else {
+                slideWidth = 100;
+            }
+        }
+        
+        // 初始化
+        updateSlideWidth();
+        window.addEventListener('resize', updateSlideWidth);
+        
+        // 滑動函數
+        function updateSliderPosition(sliderId, index) {
+            const slider = document.getElementById(`slider${sliderId}`);
+            slider.style.transform = `translateX(-${index * slideWidth}%)`;
+            
+            // 更新導航點
+            const dots = document.querySelectorAll(`#sliderNav${sliderId} .slider-dot`);
+            dots.forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        // 前往特定幻燈片
+        function goToSlide(sliderId, index) {
+            if (sliderId === 1) {
+                currentSlideIndex1 = index;
+                updateSliderPosition(1, currentSlideIndex1);
+            } else if (sliderId === 2) {
+                currentSlideIndex2 = index;
+                updateSliderPosition(2, currentSlideIndex2);
+            } else if (sliderId === 3) {
+                currentSlideIndex3 = index;
+                updateSliderPosition(3, currentSlideIndex3);
+            }
+        }
+        
+        // 上一張幻燈片
+        function prevSlide(sliderId) {
+            if (sliderId === 1) {
+                currentSlideIndex1 = Math.max(0, currentSlideIndex1 - 1);
+                updateSliderPosition(1, currentSlideIndex1);
+            } else if (sliderId === 2) {
+                currentSlideIndex2 = Math.max(0, currentSlideIndex2 - 1);
+                updateSliderPosition(2, currentSlideIndex2);
+            } else if (sliderId === 3) {
+                currentSlideIndex3 = Math.max(0, currentSlideIndex3 - 1);
+                updateSliderPosition(3, currentSlideIndex3);
+            }
+        }
+        
+        // 下一張幻燈片
+        function nextSlide(sliderId) {
+            const maxIndex = window.innerWidth > 768 ? 2 : 2; // 在較大的屏幕上有3張滑塊，所以最大索引是2
+            
+            if (sliderId === 1) {
+                currentSlideIndex1 = Math.min(maxIndex, currentSlideIndex1 + 1);
+                updateSliderPosition(1, currentSlideIndex1);
+            } else if (sliderId === 2) {
+                currentSlideIndex2 = Math.min(maxIndex, currentSlideIndex2 + 1);
+                updateSliderPosition(2, currentSlideIndex2);
+            } else if (sliderId === 3) {
+                currentSlideIndex3 = Math.min(maxIndex, currentSlideIndex3 + 1);
+                updateSliderPosition(3, currentSlideIndex3);
+            }
+        }
+        
+        // 觸摸事件處理
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        function setupTouchEvents(sliderId) {
+            const slider = document.getElementById(`slider${sliderId}`);
+            
+            slider.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+            
+            slider.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe(sliderId);
+            }, false);
+        }
+        
+        function handleSwipe(sliderId) {
+            if (touchEndX < touchStartX) {
+                // 左滑
+                nextSlide(sliderId);
+            } else if (touchEndX > touchStartX) {
+                // 右滑
+                prevSlide(sliderId);
+            }
+        }
+        
+        // 設置觸摸事件
+        setupTouchEvents(1);
+        setupTouchEvents(2);
+        setupTouchEvents(3);
+        
+        // 初始化滑塊位置
+        updateSliderPosition(1, currentSlideIndex1);
+        updateSliderPosition(2, currentSlideIndex2);
+        updateSliderPosition(3, currentSlideIndex3);
+    </script>
+</body>
+</html>
